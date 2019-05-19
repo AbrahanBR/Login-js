@@ -11,17 +11,18 @@ function sigin(event){
     const username = document.getElementById("username").value;
     const senha = document.getElementById("senha").value;
 
-    const users = JSON.parse(localStorage.getItem("register")) || [];
+    $.get("http://localhost:3000/users", (users) => {
+        users.forEach((user) => {
+            if(user.username === username && user.senha === senha){
+                localStorage.setItem("login",JSON.stringify(user));
+                window.location.href="sucesspage.html"
+            }
+            
+        })
+    
+        alertDialog("The username or password is incorrect","danger");
+    }) 
 
-    users.forEach((user) => {
-        if(user.username === username && user.senha === senha){
-            localStorage.setItem("login",JSON.stringify(user));
-            window.location.href="sucesspage.html"
-        }
-        
-    })
-
-    alertDialog("The username or password is incorrect","danger");
     return false;
 }
 

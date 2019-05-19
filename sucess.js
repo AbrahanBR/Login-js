@@ -17,11 +17,16 @@ function sginup(event) {
         senha
     }
 
-    const users = JSON.parse(localStorage.getItem("register")) || [];
-    users.push(user);
-    localStorage.setItem("register", JSON.stringify(users));
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/users",
+        data: JSON.stringify(user),
+        contentType: "application/json; charset=utf-8",         
+        dataType: "json",
+        success: () => window.location.href="index.html?created",
+        failure: (err) => console.error(err)
+    })
 
-    window.location.href="index.html?created";
 
     return false;
 }
